@@ -1,0 +1,5 @@
+{
+  "name": "Système d'Analyse des Lignes de Bus",
+  "description": "Une application web pour l'analyse et la simulation des métriques d'un réseau de lignes de bus, basée sur des paramètres configurables et des données opérationnelles détaillées.",
+  "requestFramePermissions": []
+}
