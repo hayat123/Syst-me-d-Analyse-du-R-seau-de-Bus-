@@ -1,6 +1,8 @@
 
+
 import React from 'react';
-import { CalculatedLineData, Season, DayType } from '../types';
+// Fix: Import AnnualMetrics to correctly type the forecast data.
+import { CalculatedLineData, Season, DayType, AnnualMetrics } from '../types';
 import Icon from '../components/Icon';
 
 interface Props {
@@ -71,7 +73,8 @@ const LineAnalysisPage: React.FC<Props> = ({ lineData }) => {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200">
-                            {Object.entries(lineData.annual_forecast).map(([year, data]) => (
+                            {/* Fix: Explicitly type `data` as AnnualMetrics to resolve type errors. */}
+                            {Object.entries(lineData.annual_forecast).map(([year, data]: [string, AnnualMetrics]) => (
                                 <tr key={year}>
                                     <td className="px-3 py-2 font-medium text-gray-800 text-right">{year}</td>
                                     <td className="px-3 py-2 text-right">{data.parc_affecte_an}</td>
@@ -97,7 +100,7 @@ const LineAnalysisPage: React.FC<Props> = ({ lineData }) => {
                     <table className="min-w-full">
                          <thead className="bg-gray-50">
                             <tr>
-                                {['Période', 'Bus', 'Voyages', 'Km Com', 'Km HLP', 'Km Tech', 'Km Total', 'H. Commercial', 'H. Conduite', 'PPHPD'].map(h => (
+                                {['Période', 'Bus', 'Voyages', 'Km Com', 'Km HLP', 'Km Tech', 'Km Total', 'H. Commercial', 'H. Conduite', 'Duties/jour', 'Cond./sem.', 'Cond. Res/sem.', 'PPHPD'].map(h => (
                                     <th key={h} className="px-3 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">{h}</th>
                                 ))}
                             </tr>
@@ -115,6 +118,9 @@ const LineAnalysisPage: React.FC<Props> = ({ lineData }) => {
                                     <td className="px-3 py-2 text-right font-semibold">{nf(metrics.km_total, 1)}</td>
                                     <td className="px-3 py-2 text-right">{nf(metrics.h_charge, 2)}</td>
                                     <td className="px-3 py-2 text-right">{nf(metrics.h_total, 2)}</td>
+                                    <td className="px-3 py-2 text-right">{nf(metrics.duties_day)}</td>
+                                    <td className="px-3 py-2 text-right">{nf(metrics.drivers_week)}</td>
+                                    <td className="px-3 py-2 text-right">{nf(metrics.drivers_week_res)}</td>
                                     <td className="px-3 py-2 text-right">{nf(metrics.pphpd)}</td>
                                 </tr>
                             ))

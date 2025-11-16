@@ -14,6 +14,10 @@ export interface GlobalParams {
   beta: number;
   gamma: number;
   h_poste: number;
+  c: number;
+  totalBusesAvailable: number;
+  alpha_duty: number;
+  w: number;
 }
 
 export interface Schedule {
@@ -61,6 +65,9 @@ export interface DailyMetrics {
   etp_res: number;
   pphpd: number;
   h_conducteurs: number; // For crew planning
+  duties_day: number;
+  drivers_week: number;
+  drivers_week_res: number;
 }
 
 export interface CalculatedDailyMetrics {
@@ -71,6 +78,7 @@ export interface CalculatedDailyMetrics {
 
 export interface AnnualMetrics {
     parc_affecte_an: number;
+    bus_max_an: number;
     voyages_an: number;
     km_com_an: number;
     km_hlp_an: number;
@@ -83,6 +91,7 @@ export interface AnnualMetrics {
 
 export interface TenYearAverages {
     parc_affecte: number;
+    bus_max: number;
     voyages: number;
     km_com: number;
     km_hlp: number;

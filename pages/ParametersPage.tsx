@@ -52,6 +52,10 @@ const ParametersPage: React.FC = () => {
         { name: 'beta', label: 'β (beta)', description: 'Réserve conducteurs', unit: 'ratio' },
         { name: 'gamma', label: 'γ (gamma)', description: 'Ratio véhicules de réserve', unit: 'ratio' },
         { name: 'h_poste', label: 'h_poste', description: 'Durée du poste conducteur', unit: 'heures' },
+        { name: 'c', label: 'C', description: 'Capacité par bus', unit: 'passagers' },
+        { name: 'totalBusesAvailable', label: 'Flotte dispo.', description: 'Total de bus disponibles dans la flotte', unit: 'bus' },
+        { name: 'alpha_duty', label: 'α_duty', description: 'Facteur inefficience relèves/positionnement', unit: 'ratio' },
+        { name: 'w', label: 'W', description: 'Facteur repos hebdomadaire (7/6)', unit: 'ratio' },
     ];
 
     return (
@@ -95,15 +99,28 @@ const ParametersPage: React.FC = () => {
 
             <div className="bg-white p-6 rounded-lg shadow-lg">
                 <h3 className="text-xl font-semibold mb-4">Formules Principales</h3>
-                <div className="space-y-4 text-sm font-mono bg-gray-800 text-white p-6 rounded-md">
-                   <p><span className="text-cyan-400">Temps de Cycle :</span> TC = temps_aller + temps_retour + Tt+Td</p>
-                   <p><span className="text-cyan-400">Bus Max :</span> Bus_max = ⌈TC / Fréquence⌉</p>
-                   <p><span className="text-cyan-400">Parc Affecté :</span> Parc_affecté = ⌈Bus_max × (1 + γ)⌉</p>
-                   <p><span className="text-cyan-400">Kilomètres Com :</span> Km_com = 2 × longueur_ligne × Voyages_AB</p>
-                   <p><span className="text-cyan-400">Kilomètres Totaux :</span> Km_tot = Km_com + Km_HLP + Km_tech</p>
-                   <p><span className="text-cyan-400">Heures Commercial :</span> H_charge = (temps_aller+temps_retour) × Trips_AB / 60</p>
-                   <p><span className="text-cyan-400">Heures Payées :</span> H_payees = H_total × α</p>
-                   <p><span className="text-cyan-400">ETP :</span> ETP = H_payees / h_poste</p>
+                <div className="space-y-2 text-sm font-mono bg-gray-800 text-white p-6 rounded-md">
+                   <p className="font-bold text-lg text-white">Temps de Cycle et Parc :</p>
+                   <p><span className="text-cyan-400">TC</span> = temps_aller + temps_retour + Tt+Td</p>
+                   <p><span className="text-cyan-400">Bus_max</span> = ⌈TC / fréquence⌉</p>
+                   <p><span className="text-cyan-400">Parc_affecté</span> = ⌈Bus_max × (1 + γ)⌉</p>
+
+                   <p className="font-bold text-lg text-white pt-4">Kilomètres :</p>
+                   <p><span className="text-cyan-400">Km_com</span> = 2 × longueur_ligne × Voyages_AB</p>
+                   <p><span className="text-cyan-400">Km_HLP</span> = δ × (2 × Bus_max)</p>
+                   <p><span className="text-cyan-400">Km_tech</span> = Km_com × (r_FMDS + r_ACC)</p>
+                   <p><span className="text-cyan-400">Km_tot</span> = Km_com + Km_HLP + Km_tech</p>
+
+                   <p className="font-bold text-lg text-white pt-4">Heures et Conducteurs :</p>
+                   <p><span className="text-cyan-400">H_total</span> = H_charge + H_HLP + H_tech</p>
+                   <p><span className="text-cyan-400">H_payées</span> = H_total × α</p>
+                   <p><span className="text-cyan-400">ETP</span> = H_payées / h_poste</p>
+                   <p><span className="text-cyan-400">ETP_réserve</span> = ETP × (1 + β)</p>
+
+                   <p className="font-bold text-lg text-white pt-4">Planification des Équipes :</p>
+                   <p><span className="text-cyan-400">Duties_day</span> = ⌈(H_total × α_duty) / 7⌉</p>
+                   <p><span className="text-cyan-400">Drivers_week</span> = ⌈Duties_day × W⌉  (où W = 7/6)</p>
+                   <p><span className="text-cyan-400">Drivers_week_res</span> = ⌈Drivers_week × (1 + β)⌉</p>
                 </div>
             </div>
         </div>

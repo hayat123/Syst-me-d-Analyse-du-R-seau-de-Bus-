@@ -58,7 +58,7 @@ const App: React.FC = () => {
         
         switch (view) {
             case 'summary':
-                return <GlobalSummaryPage onSelectLine={handleSelectLine} />;
+                return <GlobalSummaryPage onSelectLine={handleSelectLine} setView={setView} />;
             case 'overview':
                 return <NetworkOverviewPage onSelectLine={handleSelectLine} />;
             case 'line-detail':
@@ -67,7 +67,7 @@ const App: React.FC = () => {
             case 'params':
                 return <ParametersPage />;
             default:
-                return <GlobalSummaryPage onSelectLine={handleSelectLine}/>;
+                return <GlobalSummaryPage onSelectLine={handleSelectLine} setView={setView}/>;
         }
     };
 
